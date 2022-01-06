@@ -156,13 +156,16 @@ Saving data...
 //////////////////////////////////////////////////////////////////////////////////
 -->
 
-<div id='frame1'; class='trialDiv'>
-    <p> อยากจะให้ทำอะไรสักอย่าง
+<<div id='frame1'; class='trialDiv'>
+    <p> 
+    <br> อยากจะให้ทำอะไรสักอย่าง
     <br> แต่ยังไม่แน่ใจ
-    <br> เดี๋ยวรูปแล้วจะบอกนะ
-    <br> อดใจรออีกหน่อย
+    <br>
+    <br>
+    <div class="continueButton">
+      <a href="#" id="cont1" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
     
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
 </div>
 
 <div id='frame2'; class='trialDiv'>
@@ -170,34 +173,46 @@ Saving data...
     <br> อะไรจะโผล่มาแบบนี้
     <br> พยายามจำตำแหน่งเอาไว้
 
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+    <div class="continueButton">
+      <a href="#" id="cont2" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='frame3'; class='trialDiv'>
     <p> 
     <br> แล้วก็จะหายไป
+    <br>
 
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+    <div class="continueButton">
+      <a href="#" id="cont3" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='frame4'; class='trialDiv'>
     <p> 
     <br> พอมีสัญญาณให้ตอบก็ตอบได้เลย
+    <br> กดลงไปบนกลมๆที่มองเห็นได้เลยเพื่อตอบ 
 
-    <br> <br> กดลงไปบนกลมๆที่มองเห็นได้เลยเพื่อตอบ </p>
+    <div class="continueButton">
+      <a href="#" id="cont4" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='frame5'; class='trialDiv'>
     <p> 
     <br> จะเป็นเช่นนี้ไปเรื่อยๆ 
     <br> พร้อมไหม
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+
+    <div class="continueButton">
+      <a href="#" id="cont5" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='rule0'; class='trialDiv'>
     <p> 
-    <br> ให้กดปุ่มตามลำดับที่จำไว้
-    <br> 
+    <br> ถ้าพื้นหลังเป็น <font color=darkgreen> <b>สีเขียว</b> </font> ให้กดปุ่ม <b>ตามลำดับ</b> ที่จำไว้
+    <br> ถ้าพื้นหลังเป็น <font color=darkred> <b>สีแดง</b> </font> ให้กดปุ่ม <b>ย้อนกลับ</b> จากลำดับที่จำไว้
+
     <br> <br> กรุณาใช้ <b>เมาส์</b> กดลงบนปุ่ม </p>
 </div>
 
@@ -530,7 +545,7 @@ Saving data...
             // Begin
             showTrial();
             startTrialTime = new Date();
-            $('.trialDiv').hide();
+            // $('.trialDiv').hide();
 
         }
 
@@ -543,13 +558,9 @@ Saving data...
                 drawObjects(ctx1,objects);
                 $('#frame1').show();
                 // Begin
-                $(document).on("keypress.trialWait", PressedKey);
-
-                function PressedKey(evt) {
-                  evt.preventDefault(); 
-                    if (evt.which == 32) {
-                        showPractice_f2();
-                    }
+                $('#cont1').on('click',pressed);
+                function pressed(){
+                  showPractice_f2();
                 }
             }
 
@@ -560,8 +571,7 @@ Saving data...
             makeButton(buttonColors[1],buttonShadow[1]);
             drawObjects(ctx1,objects);
             $('#frame2').show();
-            $(document).on("keypress.trialWait", PressedKey);
-            function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f3();}}
+            $('#cont2').click(showPractice_f3);
         }
 
         function showPractice_f3(){
@@ -569,8 +579,7 @@ Saving data...
             makeButton(buttonColors[2],buttonShadow[2]);
             drawObjects(ctx1,objects);
             $('#frame3').show();
-            $(document).on("keypress.trialWait", PressedKey);
-            function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f4();}}
+            $('#cont3').click(showPractice_f4);
         }
 
         function showPractice_f4(){
@@ -582,20 +591,18 @@ Saving data...
                 drawObjects(ctx1,objects);
                 
                 $('#frame4').show();
-                $(document).on("keypress.trialWait", PressedKey);
-              function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f5();}}
+                $('#cont4').click(showPractice_f5);
         }
 
         function showPractice_f5(){
-            
-            $(document).off("keypress.trialWait");
+             
             $('#frame4').hide();
             erase(ctx1);
             clear();
             makeButton(buttonColors[0],buttonShadow[0]);
             drawObjects(ctx1,objects);
             $('#frame5').show();
-            $(document).on("keypress.trialWait", function press4 (evt) { evt.preventDefault();  if (IsTurkPreview() == true) {showFirstTrial();}});
+            $('#cont5').click(showFirstTrial);
         }
 
         function Done() {
